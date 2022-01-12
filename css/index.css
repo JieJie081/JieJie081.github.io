@@ -1340,7 +1340,7 @@ body {
   background: var(--global-bg);
   color: var(--font-color);
   font-size: var(--global-font-size);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: BlinkMacSystemFont;
   line-height: 2;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
@@ -1409,7 +1409,7 @@ hr:before {
   left: 5%;
   z-index: 1;
   color: var(--hr-before-color);
-  content: '\f0c4';
+  content: '\f197';
   font-size: 20px;
   line-height: 1;
   -webkit-transition: all 1s ease-in-out;
@@ -3379,10 +3379,10 @@ blockquote footer cite:before {
 #aside-content>#card,
 .layout_post>#post,
 .read-mode .layout_post>#post {
-  background: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.8);
 }
 .card-widget {
-  background: rgba(255,255,255,0.7) !important;
+  background: rgba(255,255,255,0.8) !important;
 }
 #post-comment .comment-head {
   margin-bottom: 1rem;
@@ -3948,6 +3948,34 @@ blockquote footer cite:before {
 }
 #nav .site-page:not(.child):hover:after {
   width: 100%;
+}
+@font-face {
+  font-family: "iconfont"; /* Project id 3135840 */
+  src: url("//at.alicdn.com/t/font_3135840_xl68gzati6q.woff2?t=1641953985298") format('woff2'), url("//at.alicdn.com/t/font_3135840_xl68gzati6q.woff?t=1641953985298") format('woff'), url("//at.alicdn.com/t/font_3135840_xl68gzati6q.ttf?t=1641953985298") format('truetype');
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-weixin:before {
+  content: "\e73b";
+  font-size: 23px;
+  color: #00bf03;
+}
+.icon-github:before {
+  content: "\ea0b";
+  font-size: 22px;
+}
+.icon-shejiaotubiao-03:before {
+  content: "\e641";
+  font-size: 24px;
+  color: #10a4ff;
+}
+.icon-shejiaotubiao-39:before {
+  content: "\e646";
 }
 #pagination {
   overflow: hidden;
