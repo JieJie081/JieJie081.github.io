@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Arduino 入门（五）</title>
+      <link href="/2022/01/23/Arduino-%E5%85%A5%E9%97%A8%EF%BC%88%E4%BA%94%EF%BC%89/"/>
+      <url>/2022/01/23/Arduino-%E5%85%A5%E9%97%A8%EF%BC%88%E4%BA%94%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<h2 id="舵机"><a href="#舵机" class="headerlink" title="舵机"></a>舵机</h2><h4 id="舵机的分类及原理"><a href="#舵机的分类及原理" class="headerlink" title="舵机的分类及原理"></a>舵机的分类及原理</h4><p>舵机分为模拟电机、数字舵机、总线舵机。舵机的讲解可以参考<code>工科孙老师的视频</code></p><p><a href="https://www.bilibili.com/video/BV15X4y157ay?share_source=copy_web">https://www.bilibili.com/video/BV15X4y157ay?share_source=copy_web</a></p><p><a href="https://www.bilibili.com/video/BV14K411F7sT?share_source=copy_web">https://www.bilibili.com/video/BV14K411F7sT?share_source=copy_web</a></p><p><strong>舵机的信号线里面传输的是一种特殊的PWM信号，这是一种周期固定为20ms的的方波，高电平的时间在0.5ms-2.5ms之间变化，0.5ms对应的是舵机旋转到0°，2.5ms是舵机旋转到180°。</strong></p><p><img src="https://cdn.jsdelivr.net/gh/jiejie081/pic/img/image-20220123144627428.png" alt="舵机的PWM信号"></p><p><img src="https://cdn.jsdelivr.net/gh/jiejie081/pic/img/image-20220123144721953.png" alt="舵机角度与PWM信号的关系"></p><h4 id="Arduino舵机的使用"><a href="#Arduino舵机的使用" class="headerlink" title="Arduino舵机的使用"></a>Arduino舵机的使用</h4><p>这是官网的参考<a href="https://www.arduino.cc/reference/en/libraries/servo/">伺服 - Arduino 参考</a></p><ol><li>舵机的连接</li></ol><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">servo.attach(pin) ;</span><br><span class="line">servo.attach(pin, min, max);</span><br><span class="line">//*servo：类型变量Servo</span><br><span class="line">//*pin：舵机连接到的引脚</span><br><span class="line">//*min（可选）：脉冲宽度，以微秒为单位，对应于舵机上的最小（0度）角（默认为544）</span><br><span class="line">//*max（可选）：脉冲宽度，以微秒为单位，对应于舵机上的最大（180度）角度（默认为2400）</span><br><span class="line">//所以默认的舵机0°和180°是由偏差的，所以我们可以servo.attach(pin,500, 2500);来改为标准的0°与180°</span><br></pre></td></tr></table></figure><ol start="2"><li>舵机角度控制</li></ol><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">servo.write(angle)；</span><br><span class="line">//*servo:舵机类型的变量</span><br><span class="line">//*angle: 写入舵机的值，从0到180</span><br></pre></td></tr></table></figure><h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol><li><p>虽然是PWM信号但是因为舵机用到的频率很低，servo库是通过软件模拟出来的，不是用的硬件（晶振）模拟，所以不支持PWM的引脚也是可以控制舵机的。但是软件模拟运用到了TIME1计时器，所以9号和10号引脚就没有PWM输出功能了。（Uno中有三个计时器Timer0、Timer1、Timer2，TIME0控制5，6引脚，Timer1控制9，10引脚，Timer2控制3，11引脚） 。所以为了避免影响其他引脚的使用一般使用9，10号引脚连接舵机。</p></li><li><p>舵机有180°的360°，180°不可以转一圈，但是可以转指定角度。360°的可以圈，但是不可以指定角度，只可以控制转速与方向。</p><p>360度舵机是没有反馈的舵机，因此我们只能控制舵机正反转以及速度。同样用Servo.h舵机控制库来控制。</p><p>当我们把程序烧录进去后可以看到360度舵机在周期性正反转，我们通过修改值来改变旋转方向和速度（小于90为顺时针，大于90为逆时针），不同的值代表不同的速度，靠近90速度越小（可能因为舵机不同而不同，多尝试，<code>myservo.write(90);</code>为停止。</p><p>也可以用<code>servo.writeMicroseconds(us)</code>。参考：<a href="https://www.arduino.cc/reference/en/libraries/servo/writemicroseconds/">Servo - writeMicroseconds（）</a></p></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> Arduino </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Arduino </tag>
+            
+            <tag> 舵机 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Arduino 入门（四）</title>
       <link href="/2022/01/21/Arduino-%E5%85%A5%E9%97%A8%EF%BC%88%E5%9B%9B%EF%BC%89/"/>
       <url>/2022/01/21/Arduino-%E5%85%A5%E9%97%A8%EF%BC%88%E5%9B%9B%EF%BC%89/</url>
@@ -31,33 +58,6 @@
     
     
     <entry>
-      <title>Arduino 入门（五）</title>
-      <link href="/2022/01/21/Arduino-%E5%85%A5%E9%97%A8%EF%BC%88%E4%BA%94%EF%BC%89/"/>
-      <url>/2022/01/21/Arduino-%E5%85%A5%E9%97%A8%EF%BC%88%E4%BA%94%EF%BC%89/</url>
-      
-        <content type="html"><![CDATA[<h2 id="舵机"><a href="#舵机" class="headerlink" title="舵机"></a>舵机</h2><h4 id="舵机的分类及原理"><a href="#舵机的分类及原理" class="headerlink" title="舵机的分类及原理"></a>舵机的分类及原理</h4><p>舵机分为模拟电机、数字舵机、总线舵机。舵机的讲解可以参考<code>工科孙老师的视频</code></p><p><a href="https://www.bilibili.com/video/BV15X4y157ay?share_source=copy_web">https://www.bilibili.com/video/BV15X4y157ay?share_source=copy_web</a></p><p><a href="https://www.bilibili.com/video/BV14K411F7sT?share_source=copy_web">https://www.bilibili.com/video/BV14K411F7sT?share_source=copy_web</a></p><p><strong>舵机的信号线里面传输的是一种特殊的PWM信号，这是一种周期固定为20ms的的方波，高电平的时间在0.5ms-2.5ms之间变化，0.5ms对应的是舵机旋转到0°，2.5ms是舵机旋转到180°。</strong></p><p><img src="https://cdn.jsdelivr.net/gh/jiejie081/pic/img/image-20220123144627428.png" alt="舵机的PWM信号"></p><p><img src="https://cdn.jsdelivr.net/gh/jiejie081/pic/img/image-20220123144721953.png" alt="舵机角度与PWM信号的关系"></p><h4 id="Arduino舵机的使用"><a href="#Arduino舵机的使用" class="headerlink" title="Arduino舵机的使用"></a>Arduino舵机的使用</h4><p>这是官网的参考<a href="https://www.arduino.cc/reference/en/libraries/servo/">伺服 - Arduino 参考</a></p><ol><li>舵机的连接</li></ol><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">servo.attach(pin) ;</span><br><span class="line">servo.attach(pin, min, max);</span><br><span class="line">//*servo：类型变量Servo</span><br><span class="line">//*pin：舵机连接到的引脚</span><br><span class="line">//*min（可选）：脉冲宽度，以微秒为单位，对应于舵机上的最小（0度）角（默认为544）</span><br><span class="line">//*max（可选）：脉冲宽度，以微秒为单位，对应于舵机上的最大（180度）角度（默认为2400）</span><br><span class="line">//所以默认的舵机0°和180°是由偏差的，所以我们可以servo.attach(pin,500, 2500);来改为标准的0°与180°</span><br></pre></td></tr></table></figure><ol start="2"><li>舵机角度控制</li></ol><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">servo.write(angle)；</span><br><span class="line">//*servo:舵机类型的变量</span><br><span class="line">//*angle: 写入舵机的值，从0到180</span><br></pre></td></tr></table></figure><h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol><li><p>虽然是PWM信号但是因为舵机用到的频率很低，servo库是通过软件模拟出来的，不是用的硬件（晶振）模拟，所以不支持PWM的引脚也是可以控制舵机的。但是软件模拟运用到了TIME1计时器，所以9号和10号引脚就没有PWM输出功能了。（Uno中有三个计时器Timer0、Timer1、Timer2，TIME0控制5，6引脚，Timer1控制9，10引脚，Timer2控制3，11引脚） 。所以为了避免影响其他引脚的使用一般使用9，10号引脚连接舵机。</p></li><li><p>舵机有180°的360°，180°不可以转一圈，但是可以转指定角度。360°的可以圈，但是不可以指定角度，只可以控制转速与方向。</p><p>360度舵机是没有反馈的舵机，因此我们只能控制舵机正反转以及速度。同样用Servo.h舵机控制库来控制。</p><p>当我们把程序烧录进去后可以看到360度舵机在周期性正反转，我们通过修改值来改变旋转方向和速度（小于90为顺时针，大于90为逆时针），不同的值代表不同的速度，靠近90速度越小（可能因为舵机不同而不同，多尝试，<code>myservo.write(90);</code>为停止。</p><p>也可以用<code>servo.writeMicroseconds(us)</code>。参考：<a href="https://www.arduino.cc/reference/en/libraries/servo/writemicroseconds/">Servo - writeMicroseconds（）</a></p></li></ol>]]></content>
-      
-      
-      <categories>
-          
-          <category> Arduino </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Arduino </tag>
-            
-            <tag> 舵机 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Arduino 入门（三）</title>
       <link href="/2022/01/19/Arduino-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%89%EF%BC%89/"/>
       <url>/2022/01/19/Arduino-%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%89%EF%BC%89/</url>
@@ -76,9 +76,9 @@
             
             <tag> Arduino </tag>
             
-            <tag> 模拟信号 </tag>
-            
             <tag> 呼吸灯 </tag>
+            
+            <tag> 模拟信号 </tag>
             
             <tag> 串口通信 </tag>
             
@@ -140,9 +140,9 @@
             
             <tag> Arduino </tag>
             
-            <tag> 数字信号 </tag>
-            
             <tag> 模拟信号 </tag>
+            
+            <tag> 数字信号 </tag>
             
         </tags>
       
